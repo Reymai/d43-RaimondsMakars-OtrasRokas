@@ -33,4 +33,6 @@ flutter run -d $BROWSER
 ## Izmnatotie avoti
 - Flutter
 
-  [Flutter documentācija](https://flutter.dev/docs)
+  [Flutter documentācija](https://flutter.dev/docs)  
+  [Material design documentation](material.io)
+
