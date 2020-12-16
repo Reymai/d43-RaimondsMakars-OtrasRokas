@@ -12,6 +12,24 @@
 - **Dart** language
 - **Firebase**
 - **MongoDB**
+## Instlēšanas intrukcija
+- Instalējiet Flutter satvaru jūsu datorā pēc [šīs instrukcijas](https://flutter.dev/docs/get-started/install).
+
+
+- Iespraudiet jūsu ierīci (IOS vai Android) datorā
+```
+cd d43-RaimondsMakars-OtrasRokas/
+flutter run
+```
+- Lai izpildīt WEB versiju
+```
+flutter channel beta
+flutter upgrade
+flutter config --enable-web 
+cd d43-RaimondsMakars-OtrasRokas/
+flutter run -d $BROWSER
+```
+
 ## Izmnatotie avoti
 - Flutter
 
