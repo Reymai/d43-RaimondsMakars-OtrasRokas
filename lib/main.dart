@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otras_rokas/screens/home.dart';
+import 'package:otras_rokas/navigation.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,8 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: Home(),
+      home: Navigation(),
     );
   }
 }
-
