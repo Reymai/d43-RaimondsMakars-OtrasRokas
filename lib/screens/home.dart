@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) => _buildItemPage(index),
       ),
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.grey[300],
       floatingActionButton: FloatingActionButton(
         child: Icon(CupertinoIcons.heart_fill),
         onPressed: () {},
