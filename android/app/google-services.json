@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "595336502088",
+    "project_id": "otras-rokas-rvt",
+    "storage_bucket": "otras-rokas-rvt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:595336502088:android:ceee22b4e24cf068f8317d",
+        "android_client_info": {
+          "package_name": "com.raimundin.otras_rokas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "595336502088-89q8pm9efh6g1lq2027chh6hc1di3l68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUVYylxtwqLM-UOjTHhrynbOaMgP92xDA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "595336502088-89q8pm9efh6g1lq2027chh6hc1di3l68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
