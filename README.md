@@ -5,13 +5,12 @@
 |Platforma |Atbalsts          |
 |----------|------------------|
 |Android   |:heavy_check_mark:|
-|IOS       |:heavy_check_mark:|
+|IOS       |Plānots           |
 |WEB       |Plānots           |
 ## Izmantotas tehnologijas
 - **Flutter** framework
 - **Dart** language
 - **Firebase**
-- **MongoDB**
 ## Instlēšanas intrukcija
 - Instalējiet Flutter satvaru jūsu datorā pēc [šīs instrukcijas](https://flutter.dev/docs/get-started/install).
 
@@ -33,6 +32,9 @@ flutter run -d $BROWSER
 ## Izmnatotie avoti
 - Flutter
 
-  [Flutter documentācija](https://flutter.dev/docs)  
+  [Flutter documentation](https://flutter.dev/docs)  
   [Material design documentation](material.io)
+
+- Firebase 
+  [Firebase for Flutter documentation](https://firebase.flutter.dev/docs/overview)
 
