@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,11 +11,29 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<Widget> pages = List.generate(10, (index) => _buildItemPage(index));
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app),
+            onPressed: () {
+              _logOut();
+            },
+          )
+        ],
       ),
       body: PageView.builder(
         itemCount: pages.length,
@@ -40,6 +59,20 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  _logOut() async {
+    await FirebaseAuth.instance.signOut();
+    await _checkAuthentication();
+  }
+
+  _checkAuthentication() {
+    FirebaseAuth.instance.authStateChanges().listen((User user) {
+      if (user == null) {
+        print('User is NOT signed in!');
+        Navigator.of(context).pushReplacementNamed('/auth');
+      }
+    });
   }
 }
 
