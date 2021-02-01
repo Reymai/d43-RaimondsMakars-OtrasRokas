@@ -23,6 +23,7 @@ class _AuthState extends State<Auth> {
   @override
   void initState() {
     super.initState();
+    _checkAuthentication(context);
   }
 
   @override
@@ -217,7 +218,7 @@ class _AuthState extends State<Auth> {
     FirebaseAuth.instance.authStateChanges().listen((User user) {
       if (user != null) {
         print('User is signed in!');
-        Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.of(context).pushReplacementNamed('/navigation');
       }
     });
   }
