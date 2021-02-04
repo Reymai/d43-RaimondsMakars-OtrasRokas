@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:otras_rokas/app.dart';
+import 'package:otras_rokas/services/app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

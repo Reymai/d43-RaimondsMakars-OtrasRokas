@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:otras_rokas/navigation.dart';
+import 'package:otras_rokas/services/navigation.dart';
 import 'package:otras_rokas/screens/auth.dart';
 import 'package:otras_rokas/screens/home.dart';
 
