@@ -45,44 +45,45 @@ class _AuthState extends State<Auth> {
                     children: [
                       Container(
                         width: 310,
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              TextFormField(
-                                decoration: InputDecoration(
-                                    labelText: 'Email',
-                                    helperText: 'Enter your Email Address'),
-                                autofillHints: [AutofillHints.email],
-                                controller: _emailController,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (email) => _emailValidator(email),
-                                autofocus: true,
-                                keyboardType: TextInputType.emailAddress,
-                              ),
-                              SizedBox.fromSize(
-                                size: Size.fromHeight(10),
-                              ),
-                              TextFormField(
-                                decoration: InputDecoration(
-                                    labelText: 'Password',
-                                    helperText:
-                                        'At least 6 characters, 1 UPPERCASE, 1 lowercase, 1 d1g1t'),
-                                autofillHints: [AutofillHints.password],
-                                controller: _passwordController,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                validator: (password) =>
-                                    _passwordValidator(password),
-                                obscureText: true,
-                                autocorrect: false,
-                                enableSuggestions: false,
-                              ),
-                              Container(
-                                height: 12,
-                              ),
-                            ],
+                        child: AutofillGroup(
+                          onDisposeAction: AutofillContextAction.commit,
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText: 'Email',
+                                      helperText: 'Enter your Email Address'),
+                                  autofillHints: [AutofillHints.email],
+                                  controller: _emailController,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (email) => _emailValidator(email),
+                                  autofocus: true,
+                                  keyboardType: TextInputType.emailAddress,
+                                ),
+                                SizedBox.fromSize(
+                                  size: Size.fromHeight(10),
+                                ),
+                                TextFormField(
+                                  decoration: InputDecoration(
+                                      labelText: 'Password',
+                                      helperText:
+                                          'At least 6 characters, 1 UPPERCASE, 1 lowercase, 1 d1g1t'),
+                                  autofillHints: [AutofillHints.password],
+                                  controller: _passwordController,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: (password) =>
+                                      _passwordValidator(password),
+                                  obscureText: true,
+                                ),
+                                Container(
+                                  height: 12,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -151,12 +152,15 @@ class _AuthState extends State<Auth> {
 
   _signInWithEmail(String email, String password) async {
     print('Email: $email, password: $password');
+    User user = FirebaseAuth.instance.currentUser;
+
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      //TODO: add email verification sending https://firebase.flutter.dev/docs/auth/usage#verifying-a-users-email
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         print('email already in use');
@@ -168,6 +172,7 @@ class _AuthState extends State<Auth> {
           );
         } on FirebaseAuthException catch (e) {
           if (e.code == 'wrong-password') {
+            //TODO: send error to password form field
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text('Wrong password!'),
@@ -227,7 +232,7 @@ class _AuthState extends State<Auth> {
     RegExp emailRegEx = RegExp(r"[\w-\.]+@([\w-]+\.)+[\w-]{2,4}");
 
     if (!emailRegEx.hasMatch(email)) {
-      return 'Wrong email';
+      return 'Wrong email format';
     }
     return null;
   }
