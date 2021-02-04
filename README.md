@@ -34,7 +34,9 @@ flutter run -d $BROWSER
 
   [Flutter documentation](https://flutter.dev/docs)  
   [Material design documentation](material.io)
+  [Custom sign-in buttons](https://pub.dev/packages/flutter_signin_button)
 
 - Firebase 
+
   [Firebase for Flutter documentation](https://firebase.flutter.dev/docs/overview)
 
