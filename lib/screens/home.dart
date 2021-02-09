@@ -28,11 +28,9 @@ class _HomeState extends State<Home> {
         title: Text('Home'),
         actions: [
           IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () {
-              _logOut();
-            },
-          )
+            icon: Icon(Icons.add),
+            onPressed: () => database.addAd(ad),
+          ),
         ],
       ),
       body: PageView.builder(
