@@ -1,15 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class Ad {
-  final String path;
-  final String label;
-  final String text;
-  final double price;
-  final Map<String, dynamic> specs;
-  final List<String> images;
-  final GeoPoint geoPoint;
-  final User user;
+  final String? path;
+  final String? label;
+  final String? text;
+  final double? price;
+  final Map<String, dynamic>? specs;
+  final List<String>? images;
+  final GeoPoint? geoPoint;
+  final String? author;
 
   Ad({
     this.path,
@@ -19,6 +18,6 @@ class Ad {
     this.specs,
     this.images,
     this.geoPoint,
-    this.user,
+    this.author,
   });
 }

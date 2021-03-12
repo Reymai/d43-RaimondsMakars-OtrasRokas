@@ -6,7 +6,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: FlatButton(
+        child: TextButton(
           child: Text('Logout'),
           onPressed: () => _logOut(context),
         ),
@@ -20,7 +20,7 @@ class Profile extends StatelessWidget {
   }
 
   _checkAuthentication(BuildContext context) {
-    FirebaseAuth.instance.authStateChanges().listen((User user) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         print('User is NOT signed in!');
         Navigator.of(context).pushReplacementNamed('/auth');

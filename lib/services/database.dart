@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase;
 import 'package:otras_rokas/models/ad.dart';
-import 'package:otras_rokas/models/user.dart';
+import 'package:otras_rokas/models/user.dart' as local;
 
 class Database {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -8,13 +9,19 @@ class Database {
   CollectionReference items = FirebaseFirestore.instance.collection('items');
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  Future addUser(User user) {
-    return users.doc().set({
-      'name': user.name,
-      'surname': user.surname,
+  Future addUser(local.User user) {
+    return users.doc(user.email).set({
+      'full_name': user.name,
       'phone_number': user.phoneNumber ?? null,
       'avatar': user.avatar ?? null,
-      'ads': user.ads ?? null,
+    });
+  }
+
+  Future addGoogleUser(firebase.User user) {
+    return users.doc(user.uid).set({
+      'full_name': user.displayName,
+      'phone_number': user.phoneNumber ?? null,
+      'avatar': user.photoURL ?? null,
     });
   }
 
@@ -27,11 +34,32 @@ class Database {
       'specs': ad.specs,
       'images': ad.images,
       'geo': ad.geoPoint,
-      'author': ad.user,
+      'author': ad.author,
     });
   }
 
-  getAd() async {
-    print('PATH: ' + (items.path ?? 'null'));
+  Future<List<Ad>> getAd() async {
+    List<Ad> ads = [];
+    try {
+      await items.get().then(
+            (value) => value.docs.forEach(
+              (element) {
+                ads.add(Ad(
+                    text: element.data()?['text'],
+                    label: element.data()?['label'],
+                    price: element.data()?['price'],
+                    images:
+                        List.from(element.data()?['images'], growable: true),
+                    path: element.data()?['path'],
+                    specs: element.data()?['specs'],
+                    geoPoint: element.data()?['geo'],
+                    author: element.data()?['author']));
+              },
+            ),
+          );
+    } catch (e) {
+      throw e;
+    }
+    return ads;
   }
 }
