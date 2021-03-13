@@ -35,6 +35,7 @@ class Database {
       'images': ad.images,
       'geo': ad.geoPoint,
       'author': ad.author,
+      'timestamp': ad.timestamp,
     });
   }
 
@@ -44,7 +45,8 @@ class Database {
       await items.get().then(
             (value) => value.docs.forEach(
               (element) {
-                ads.add(Ad(
+                ads.add(
+                  Ad(
                     text: element.data()?['text'],
                     label: element.data()?['label'],
                     price: element.data()?['price'],
@@ -53,13 +55,17 @@ class Database {
                     path: element.data()?['path'],
                     specs: element.data()?['specs'],
                     geoPoint: element.data()?['geo'],
-                    author: element.data()?['author']));
+                    author: element.data()?['author'],
+                    timestamp: element.data()?['timestamp'],
+                  ),
+                );
               },
             ),
           );
     } catch (e) {
       throw e;
     }
+    ads.sort((a, b) => b.timestamp!.compareTo(a.timestamp!));
     return ads;
   }
 }

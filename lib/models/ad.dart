@@ -4,11 +4,12 @@ class Ad {
   final String? path;
   final String? label;
   final String? text;
-  final double? price;
+  final String? price;
   final Map<String, dynamic>? specs;
   final List<String>? images;
   final GeoPoint? geoPoint;
   final String? author;
+  final int? timestamp;
 
   Ad({
     this.path,
@@ -19,5 +20,6 @@ class Ad {
     this.images,
     this.geoPoint,
     this.author,
+    this.timestamp,
   });
 }
