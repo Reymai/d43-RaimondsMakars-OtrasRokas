@@ -1,0 +1,57 @@
+{
+  "Category": {
+    "Network equipment": [
+      "Hub",
+      "Switch",
+      "Router",
+      "Bridge",
+      "Gateway",
+      "Modem",
+      "Repeater",
+      "Access Point",
+      "Server",
+      "NAS"
+    ],
+    "UPS": [
+      "UPS",
+      "Battery",
+      "Accessories"
+    ],
+    "Computers": {
+      "Assemblies": [],
+      "Parts": [
+        "Hard drive",
+        "SSD",
+        "RAM",
+        "Video card",
+        "Processor",
+        "Motherboards",
+        "Case"
+      ],
+      "Accessories": []
+    },
+    "Computer peripheral": [
+      "Keyboard",
+      "Mouse",
+      "Headphones"
+    ],
+    "Monitors": [],
+    "Laptops": [],
+    "Smartphone": [
+      "Smartphones",
+      "Cases",
+      "Accessories"
+    ],
+    "Tablet": [
+      "Tablets",
+      "Cases",
+      "Accessories"
+    ],
+    "Smart watch": [
+      "Smart watches",
+      "Watchbands",
+      "Accessories"
+    ],
+    "Other": []
+  }
+}

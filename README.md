@@ -33,8 +33,11 @@ flutter run -d $BROWSER
 - Flutter
 
   [Flutter documentation](https://flutter.dev/docs)  
-  [Material design documentation](material.io) 
-  [Custom sign-in buttons](https://pub.dev/packages/flutter_signin_button) 
+  [Material design documentation](https://material.io) 
+  [Custom sign-in buttons](https://pub.dev/packages/flutter_signin_button)
+  [Carousel slider widget](https://pub.dev/packages/carousel_slider)
+  [Multiline text field](https://stackoverflow.com/questions/45900387/multi-line-textfield-in-flutter)
+  [File picker](https://pub.dev/packages/file_picker)
 
 - Firebase 
 

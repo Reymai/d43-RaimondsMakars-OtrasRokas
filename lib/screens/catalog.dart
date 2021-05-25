@@ -1,27 +1,39 @@
-import 'package:flutter/material.dart';
-import 'package:otras_rokas/services/database.dart';
+import 'dart:convert';
 
-enum CatalogItem {
-  animals,
-  clothes,
-  electrical,
-  for_home,
-  for_kids,
-  free,
-  other,
-  real_estate,
-  transport,
-  work,
-}
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:otras_rokas/services/database.dart';
 
 class Catalog extends StatelessWidget {
   final Database database = Database();
   final List<String> categories = [];
+  final Future<String> categoryJson =
+      rootBundle.loadString('./lib/models/category.json');
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> grid = List.generate(
-        CatalogItem.values.length,
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      body: FutureBuilder(
+        future: categoryJson,
+        builder: (context, AsyncSnapshot<String> snapshot) =>
+            snapshot.hasData && snapshot.data != null
+                ? GridView.count(
+                    crossAxisCount: 2,
+                    children: _generateList(jsonDecode(snapshot.data!)),
+                  )
+                : Center(
+                    child: CircularProgressIndicator(),
+                  ),
+      ),
+    );
+  }
+
+  List<Widget> _generateList(Map<String, dynamic> catalogItem) {
+    print(catalogItem['Category']);
+    catalogItem = catalogItem['Category'];
+    return List.generate(
+        catalogItem.length,
         (index) => Padding(
               padding: EdgeInsets.all(8.0),
               child: Container(
@@ -31,17 +43,9 @@ class Catalog extends StatelessWidget {
                 ),
                 child: Center(
                   child: Image.network(
-                      'https://via.placeholder.com/184/FFFFFF?text=${CatalogItem.values[index]}'),
+                      'https://via.placeholder.com/184/FFFFFF?text=${catalogItem.keys.elementAt(index)}'),
                 ),
               ),
             ));
-
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: grid,
-      ),
-    );
   }
 }

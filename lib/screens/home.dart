@@ -47,41 +47,18 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    Random random = Random(Timestamp.now().millisecondsSinceEpoch);
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Last ads'),
         centerTitle: true,
         actions: [
           IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () async {
-                final photos = await client.photos
-                    .random(
-                        query: 'apartments', count: (random.nextInt(10) + 1))
-                    .goAndGet();
-                List<String> photoList = [];
-                photos.forEach((element) {
-                  photoList.add(element.urls.regular.toString());
-                });
-                database.addAd(
-                  Ad(
-                    author: auth.currentUser!.uid,
-                    path: 'items/animals',
-                    label: 'Test label' * (random.nextInt(5) + 1),
-                    text:
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fermentum rhoncus velit vitae convallis. In hac habitasse platea dictumst. Fusce accumsan eu ex ac maximus.' *
-                            (random.nextInt(10) + 1),
-                    price: (random.nextDouble() * (random.nextInt(99) + 1))
-                        .toStringAsFixed(2),
-                    specs: {'test': 'test', 'test 42': 42},
-                    geoPoint: GeoPoint(56.9715833, 23.9890811),
-                    images: photoList,
-                    timestamp: DateTime.now().millisecondsSinceEpoch,
-                  ),
-                );
-              }),
+            icon: Icon(Icons.add),
+            onPressed: () async {
+              Navigator.pushNamed(context, '/creating');
+              // _createMockedAd();
+            },
+          ),
         ],
       ),
       body: RefreshIndicator(
@@ -119,104 +96,108 @@ class _HomeState extends State<Home> {
           elevation: 5,
           color: Colors.white,
           borderRadius: BorderRadius.circular(25),
-          child: Padding(
-            padding: EdgeInsets.all(15.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
-                    data.label!,
-                    style: TextStyle(fontSize: 17),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(25),
+            onTap: () {},
+            child: Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    child: Text(
+                      data.label!,
+                      style: TextStyle(fontSize: 17),
+                    ),
                   ),
-                ),
-                Divider(
-                  thickness: 1,
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CarouselSlider(
-                        items: List.generate(
-                          data.images!.length,
-                          (index) => InteractiveViewer(
-                            alignPanAxis: true,
-                            scaleEnabled: true,
-                            child: Image.network(
-                              data.images!.elementAt(index),
+                  Divider(
+                    thickness: 1,
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CarouselSlider(
+                          items: List.generate(
+                            data.images!.length,
+                            (index) => InteractiveViewer(
+                              alignPanAxis: true,
+                              scaleEnabled: true,
+                              child: Image.network(
+                                data.images!.elementAt(index),
+                              ),
+                            ),
+                          ),
+                          options: CarouselOptions(
+                            aspectRatio: 1.4,
+                            enlargeCenterPage: true,
+                            autoPlay: false,
+                            enableInfiniteScroll: true,
+                            scrollDirection: Axis.horizontal,
+                            viewportFraction: 0.8,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    thickness: 1,
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: RichText(
+                      text: data.text!.length < 315
+                          ? TextSpan(
+                              text: data.text,
+                              style: DefaultTextStyle.of(context)
+                                  .style
+                                  .merge(TextStyle(fontSize: 16)),
+                            )
+                          : TextSpan(
+                              text: data.text!.substring(0, 315),
+                              style: DefaultTextStyle.of(context)
+                                  .style
+                                  .merge(TextStyle(fontSize: 16)),
+                              children: [
+                                TextSpan(
+                                    text: ' ',
+                                    style: DefaultTextStyle.of(context).style),
+                                TextSpan(
+                                  text: 'Read more...',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.deepPurple,
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline),
+                                ),
+                              ],
+                            ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Column(
+                      children: [
+                        Divider(
+                          thickness: 1,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: EdgeInsets.all(15.0),
+                            child: Text(
+                              '€ ${data.price}',
+                              style: TextStyle(fontSize: 25),
                             ),
                           ),
                         ),
-                        options: CarouselOptions(
-                          aspectRatio: 1.4,
-                          enlargeCenterPage: true,
-                          autoPlay: false,
-                          enableInfiniteScroll: true,
-                          scrollDirection: Axis.horizontal,
-                          viewportFraction: 0.8,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Divider(
-                  thickness: 1,
-                ),
-                Expanded(
-                  flex: 1,
-                  child: RichText(
-                    text: data.text!.length < 315
-                        ? TextSpan(
-                            text: data.text,
-                            style: DefaultTextStyle.of(context)
-                                .style
-                                .merge(TextStyle(fontSize: 16)),
-                          )
-                        : TextSpan(
-                            text: data.text!.substring(0, 315),
-                            style: DefaultTextStyle.of(context)
-                                .style
-                                .merge(TextStyle(fontSize: 16)),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: ' ',
-                                  style: DefaultTextStyle.of(context).style),
-                              TextSpan(
-                                text: 'Read more...',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.deepPurple,
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline),
-                              ),
-                            ],
-                          ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Column(
-                    children: [
-                      Divider(
-                        thickness: 1,
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Padding(
-                          padding: EdgeInsets.all(15.0),
-                          child: Text(
-                            '€ ${data.price}',
-                            style: TextStyle(fontSize: 25),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -229,6 +210,34 @@ class _HomeState extends State<Home> {
       ads = database.getAd();
     });
     return ads;
+  }
+
+  _createMockedAd() async {
+    Random random = Random(Timestamp.now().millisecondsSinceEpoch);
+
+    final photos = await client.photos
+        .random(query: 'apartments', count: (random.nextInt(10) + 1))
+        .goAndGet();
+    List<String> photoList = [];
+    photos.forEach((element) {
+      photoList.add(element.urls.regular.toString());
+    });
+    database.addAd(
+      Ad(
+        author: auth.currentUser!.uid,
+        path: 'items/animals',
+        label: 'Test label' * (random.nextInt(5) + 1),
+        text:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris fermentum rhoncus velit vitae convallis. In hac habitasse platea dictumst. Fusce accumsan eu ex ac maximus.' *
+                (random.nextInt(10) + 1),
+        price:
+            (random.nextDouble() * (random.nextInt(99) + 1)).toStringAsFixed(2),
+        specs: {'test': 'test', 'test 42': 42},
+        geoPoint: GeoPoint(56.9715833, 23.9890811),
+        images: photoList,
+        timestamp: DateTime.now().millisecondsSinceEpoch,
+      ),
+    );
   }
 }
 

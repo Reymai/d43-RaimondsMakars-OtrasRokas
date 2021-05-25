@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:otras_rokas/screens/authentication.dart';
+import 'package:otras_rokas/screens/creating.dart';
 import 'package:otras_rokas/services/navigation.dart';
 import 'package:otras_rokas/screens/home.dart';
 
@@ -19,6 +20,7 @@ class App extends StatelessWidget {
         '/home': (context) => Home(),
         '/auth': (context) => Authentication(),
         '/navigation': (context) => Navigation(),
+        '/creating': (context) => Creating(),
       },
       navigatorKey: navigatorKey,
     );
